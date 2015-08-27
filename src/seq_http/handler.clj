@@ -1,9 +1,9 @@
 (ns seq_http.handler
-  (:use ring.util.response)
-  (:require [compojure.core :refer :all]
-            [compojure.handler :as handler]
+  (:require [ring.util.response :refer [response]]
+            [ring.middleware.json :as middleware]
             [compojure.route :as route]
-            [ring.middleware.json :as middleware]))
+            [compojure.core :refer [context defroutes ANY GET]])
+  (:gen-class))
 
 (defn init []
   (println "seq_http is starting..."))
@@ -22,10 +22,10 @@
   (context "/api" []
     (GET "/repeat/:x/:n" [n x] (response (repeat (to_int n) x)))
     (GET "/count/:n" [n] (response (range (to_int n))))
-    (GET "/fib/:n" [n] (response (take (to_int n) (fib 0 1)))))
-  (route/not-found "not found"))
+    (GET "/fib/:n" [n] (response (take (to_int n) (fib 0 1N)))))
+  (route/not-found "not foundd"))
 
 (def app
-  (-> (handler/api app-routes)
+  (-> app-routes
       (middleware/wrap-json-body)
       (middleware/wrap-json-response)))
