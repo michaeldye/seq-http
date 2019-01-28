@@ -15,17 +15,24 @@
 
 (defn fib [a b] (cons a (lazy-seq (fib b (+ b a)))))
 
-; TODO: handle exceptions; ill input "like curl -i http://localhost:3000/api/repeat/12/aa" yields 500 with stacktrace, yikes!)
-; TODO: handle input out of bounds
+(defn wrap-exception-handling
+  [handler]
+  (fn [request]
+    (try
+      (handler request)
+      (catch Exception e
+        {:status 400 :body "Invalid data"}))))
+
 (defroutes app-routes
   ; context for entire app
   (context "/api" []
     (GET "/repeat/:x/:n" [n x] (response (repeat (to_int n) x)))
     (GET "/count/:n" [n] (response (range (to_int n))))
     (GET "/fib/:n" [n] (response (take (to_int n) (fib 0 1N)))))
-  (route/not-found "not foundd"))
+  (route/not-found "not found"))
 
 (def app
   (-> app-routes
       (middleware/wrap-json-body)
-      (middleware/wrap-json-response)))
+      (middleware/wrap-json-response)
+      (wrap-exception-handling)))

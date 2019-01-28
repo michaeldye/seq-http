@@ -9,7 +9,7 @@ purpose is two-fold:
 
 ### Environment
 
-Below are a few leiningen (cf. http://leiningen.org/) commands used to work with the project. To set up a development environment in docker, see https://github.com/michaeldye/docker_seq.
+Below are a few leiningen (cf. http://leiningen.org/) commands used to work with the project. To deploy in a development environment in docker, see https://github.com/michaeldye/docker_seq.
 
 Starting the application:
 
