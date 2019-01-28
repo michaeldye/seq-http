@@ -3,5 +3,5 @@ LABEL maintainer="mdye@us.ibm.com"
 
 ENV VERSION=0.2.0
 
-ADD ./target/seq_http-$VERSION-standalone.jar /seq_http.jar
-CMD ["java", "-jar", "/seq_http.jar"]
+ADD ./target/seq-http-$VERSION-standalone.jar /seq-http.jar
+CMD ["java", "-jar", "/seq-http.jar"]

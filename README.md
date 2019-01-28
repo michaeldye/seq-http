@@ -1,4 +1,4 @@
-## seq_http
+## seq-http
 
 This is a small HTTP service that generates simple mathematical sequences. Its
 purpose is two-fold:
@@ -25,4 +25,4 @@ Packaging the application for distribution:
 
 Create a docker container with:
 
-    docker build -t mdye/seq_http-amd64:0.2.0 .
+    docker build -t mdye/seq-http-amd64:0.2.0 .

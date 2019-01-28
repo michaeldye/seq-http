@@ -1,4 +1,4 @@
-(ns seq_http.handler
+(ns seq-http.handler
   (:require [ring.util.response :refer [response]]
             [ring.middleware.json :as middleware]
             [clojure.tools.logging :as log]
@@ -9,17 +9,20 @@
 
 
 (defn init []
-  (println "seq_http is starting..."))
+  (println "seq-http is starting..."))
 
 (defn destroy []
-  (println "seq_http is shutting down..."))
+  (println "seq-http is shutting down..."))
 
-(defn to-int [n] (Integer/parseInt n))
+(defn to-int [n]
+  (cond
+    (instance? String n) (Integer/parseInt n)
+    :else (int n)))
 
 (defn fib [a b] (cons a (lazy-seq (fib b (+ b a)))))
 
 (defn fib-limited [n]
-  (if (< (or (to-int (System/getenv "MAX_FIB")) 10) n)
+  (if (< (to-int(or (System/getenv "MAX_FIB") 10)) n)
     (throw (IllegalArgumentException. "Provided fib value too large"))
     (take n (fib 0 1N))))
 
