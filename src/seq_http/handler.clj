@@ -6,8 +6,6 @@
             [compojure.core :refer [context defroutes ANY GET]])
   (:gen-class))
 
-
-
 (defn init []
   (println "seq-http is starting..."))
 
@@ -19,12 +17,16 @@
     (instance? String n) (Integer/parseInt n)
     :else (int n)))
 
-(defn fib [a b] (cons a (lazy-seq (fib b (+ b a)))))
+(defn -fib-sum-pairs [^long n]
+  (let [next-fib (fn [[a b]] [b (+ a b)])
+        fibs (iterate next-fib [0N 1N])]
+    (take n fibs)))
 
-(defn fib-limited [n]
-  (if (< (to-int(or (System/getenv "MAX_FIB") 10)) n)
-    (throw (IllegalArgumentException. "Provided fib value too large"))
-    (take n (fib 0 1N))))
+(defn fib [n] (cond
+                (< n 0) '()
+                (= n 0) '(0)
+                :else (let [ss (-fib-sum-pairs n)]
+                (cons (ffirst ss) (map last ss)))))
 
 (defn wrap-exception-handling
   [handler]
@@ -38,9 +40,9 @@
 (defroutes app-routes
   ; context for entire app
   (context "/api" []
-    (GET "/repeat/:x/:n" [n x] (response (repeat (to-int n) x)))
+    (GET "/repeat/:x/:n" [n x] (response (repeat (to-int n) (to-int x ))))
     (GET "/count/:n" [n] (response (range (to-int n))))
-    (GET "/fib/:n" [n] (response (fib-limited (to-int n))))
+    (GET "/fib/:n" [n] (response (fib (to-int n))))
   (route/not-found "not found")))
 
 (def app
