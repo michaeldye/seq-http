@@ -1,4 +1,4 @@
-(defproject seq-http "0.3.0"
+(defproject seq-http "0.4.0"
   :description "HTTP service that generates basic mathematical sequences given input"
   :url "https://github.com/michaeldye/seq-http"
   :dependencies [[org.clojure/clojure "1.10.1"]
