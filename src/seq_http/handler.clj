@@ -26,7 +26,7 @@
                 (< n 0) '()
                 (= n 0) '(0)
                 :else (let [ss (-fib-sum-pairs n)]
-                (cons (ffirst ss) (map last ss)))))
+                        (cons (ffirst ss) (map last ss)))))
 
 (defn wrap-exception-handling
   [handler]
@@ -40,13 +40,13 @@
 (defroutes app-routes
   ; context for entire app
   (context "/api" []
-    (GET "/repeat/:x/:n" [n x] (response (repeat (to-int n) (to-int x ))))
+    (GET "/repeat/:x/:n" [n x] (response (repeat (to-int n) (to-int x))))
     (GET "/count/:n" [n] (response (range (to-int n))))
     (GET "/fib/:n" [n] (let [ni (to-int n)]
                          (cond
                            (> ni 30000) (throw (AssertionError. "Input exceeds limit"))
                            :else (response (fib (to-int n))))))
-  (route/not-found "not found")))
+    (route/not-found "not found")))
 
 (def app
   (-> app-routes

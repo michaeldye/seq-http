@@ -6,7 +6,8 @@
                  [ring/ring-json "0.5.0"]
                  [org.clojure/tools.logging "0.4.1"]
                  [compojure "1.6.1"]]
-  :plugins [[lein-ring "0.12.5"]]
+  :plugins [[lein-ring "0.12.5"]
+            [lein-cljfmt "0.6.8"]]
   :ring {:handler seq-http.handler/app
          :init seq-http.handler/init
          :destroy seq-http.handler/destroy
